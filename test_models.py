@@ -106,4 +106,50 @@ git add tests/test_models.py
 git commit -m "Adiciona teste de LIST ALL para modelos"
 git push origin main
 
+def test_find_by_category(db_session, product_factory):
+    # Cria produtos de teste
+    product1 = product_factory.create(name="Product A", category="Electronics", available=True)
+    product2 = product_factory.create(name="Product B", category="Clothing", available=False)
+    product3 = product_factory.create(name="Product C", category="Electronics", available=True)
+    db_session.add_all([product1, product2, product3])
+    db_session.commit()
+
+    # Encontra os produtos pela categoria
+    found_products = Product.find_by_category("Electronics")
+    assert len(found_products) == 2
+    assert product1 in found_products
+    assert product3 in found_products
+
+pytest tests/test_models.py
+
+git add tests/test_models.py
+git commit -m "Adiciona teste de FIND BY CATEGORY para modelos"
+git push origin main
+
+def test_find_by_availability(db_session, product_factory):
+    # Cria produtos de teste
+    product1 = product_factory.create(name="Product A", category="Electronics", available=True)
+    product2 = product_factory.create(name="Product B", category="Clothing", available=False)
+    product3 = product_factory.create(name="Product C", category="Electronics", available=True)
+    db_session.add_all([product1, product2, product3])
+    db_session.commit()
+
+    # Encontra os produtos disponíveis
+    available_products = Product.find_by_availability(True)
+    assert len(available_products) == 2
+    assert product1 in available_products
+    assert product3 in available_products
+
+    # Encontra os produtos não disponíveis
+    unavailable_products = Product.find_by_availability(False)
+    assert len(unavailable_products) == 1
+    assert product2 in unavailable_products
+
+pytest tests/test_models.py
+
+git add tests/test_models.py
+git commit -m "Adiciona teste de FIND BY AVAILABILITY para modelos"
+git push origin main
+
+
 
