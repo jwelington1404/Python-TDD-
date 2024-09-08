@@ -67,3 +67,23 @@ git add tests/test_models.py
 git commit -m "Adiciona teste de DELETE para modelos"
 git push origin main
 
+def test_list_all_products(db_session, product_factory):
+    # Cria múltiplos produtos de teste
+    product1 = product_factory.create(name="Product A", category="Category 1", available=True)
+    product2 = product_factory.create(name="Product B", category="Category 2", available=False)
+    db_session.add_all([product1, product2])
+    db_session.commit()
+
+    # Lista todos os produtos
+    all_products = Product.list_all()
+    assert len(all_products) == 2
+    assert product1 in all_products
+    assert product2 in all_products
+
+pytest tests/test_models.py
+
+git add tests/test_models.py
+git commit -m "Adiciona teste de LIST ALL para modelos"
+git push origin main
+
+
