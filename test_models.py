@@ -44,4 +44,26 @@ git add tests/test_models.py
 git commit -m "Adiciona teste de UPDATE para modelos"
 git push origin main
 
+def test_delete_product(db_session, product_factory):
+    # Cria um produto de teste
+    product = product_factory.create(name="Product A", category="Category 1", available=True)
+    db_session.add(product)
+    db_session.commit()
+
+    # Verifica se o produto foi adicionado
+    assert Product.find_by_id(product.id) is not None
+
+    # Deleta o produto
+    db_session.delete(product)
+    db_session.commit()
+
+    # Verifica se o produto foi deletado
+    deleted_product = Product.find_by_id(product.id)
+    assert deleted_product is None
+
+pytest tests/test_models.py
+
+git add tests/test_models.py
+git commit -m "Adiciona teste de DELETE para modelos"
+git push origin main
 
