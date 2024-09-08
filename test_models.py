@@ -82,6 +82,26 @@ def test_list_all_products(db_session, product_factory):
 
 pytest tests/test_models.py
 
+def test_find_by_name(db_session, product_factory):
+    # Cria produtos de teste
+    product1 = product_factory.create(name="Unique Product A", category="Category 1", available=True)
+    product2 = product_factory.create(name="Another Product B", category="Category 2", available=False)
+    db_session.add_all([product1, product2])
+    db_session.commit()
+
+    # Encontra o produto pelo nome
+    found_product = Product.find_by_name("Unique Product A")
+    assert found_product is not None
+    assert found_product.name == "Unique Product A"
+    assert found_product.category == "Category 1"
+    assert found_product.available is True
+
+pytest tests/test_models.py
+
+git add tests/test_models.py
+git commit -m "Adiciona teste de FIND BY NAME para modelos"
+git push origin main
+
 git add tests/test_models.py
 git commit -m "Adiciona teste de LIST ALL para modelos"
 git push origin main
