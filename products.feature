@@ -424,3 +424,7 @@ def step_impl(context):
 
     context.browser.quit()  # Fecha o navegador após o teste
 
+git add features/products.feature features/steps/product_steps.py
+git commit -m "Adiciona cenário e passos BDD para leitura de um produto"
+git push origin main
+
