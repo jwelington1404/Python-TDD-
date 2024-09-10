@@ -24,3 +24,8 @@ def list_products():
     # Executa a query e retorna os produtos
     products = query.all()
     return jsonify([product.to_dict() for product in products]), 200
+
+git add service/routes.py
+git commit -m "Adiciona funções de LIST ALL, LIST BY NAME, LIST BY CATEGORY e LIST BY AVAILABILITY para rotas"
+git push origin main
+
